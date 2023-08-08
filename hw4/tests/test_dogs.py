@@ -32,10 +32,8 @@ def test_random_image_by_sub_breed(api, breed, sub_breed):
     assert "message" in response
 
 
-def test_multiple_random_images(api):
-    breed = "hound"
-    sub_breed = "afghan"
-    count = 3
+@pytest.mark.parametrize("breed, sub_breed, count", [("hound", "afghan", 3)])
+def test_multiple_random_images(api, breed, sub_breed, count):
     response = api.get_multiple_random_images(breed, sub_breed, count)
     assert response["status"] == "success"
     assert isinstance(response["message"], list)
